@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Signup = () => {
 
@@ -10,7 +11,18 @@ const Signup = () => {
     const handleSubmit = (e) =>{
         e.preventDefault();
         let obj={email,userName,password};
-        console.log(obj);
+        axios({
+          method: 'post',
+          url:"https://confused-crab-petticoat.cyclic.cloud/signup",
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          data:obj,
+        })
+        .then((res)=>{
+          console.log(res);
+        })
+        .catch((err)=>console.log(err));
     }
 
   return (

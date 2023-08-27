@@ -1,15 +1,40 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 
 const Login = () => {
 
+const [data,setData] = useState([]);
  const [email,setEmail] = useState("");
  const [password,setPassword] = useState("");
 
+ const getData = () =>{
+  axios.get("https://confused-crab-petticoat.cyclic.cloud/signup")
+  .then((res)=>{
+    console.log(res.data)
+    setData(res.data)})
+    .catch((err)=>console.log(err))
+}
+
+
  const handleSubmit = (e) =>{
     e.preventDefault();
-    let obj
+    data.forEach((ele)=>{
+      if(ele.email !== email){
+        alert("Invalid Email.");
+      }else if(ele.email==email && ele.password !== password){
+        alert("Invalid  Password! Please try again.");
+      }
+      else{
+        alert("Login Successful.");
+      }
+    })
  }
+
+ useEffect(()=>{
+  getData();
+ },[])
 
   return (
     <div>
